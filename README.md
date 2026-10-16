@@ -46,3 +46,13 @@ The 3D scene is a **decorative visualization** of a cybersecurity core; it does 
 - 3D unavailable: website shows an abstract fallback and all content stays accessible.
 - Missing resume: add `public/resume.pdf` and redeploy.
 - Contact email: uses the visitor's email application; copying requires a secure context (HTTPS).
+
+
+## GitHub Pages deployment — portfolioc
+
+This version is configured for `https://pavu1234.github.io/portfolioc/`.
+Upload the **contents** of this folder to the `main` branch of `pavu1234/portfolioc` (not an additional nested folder).
+The workflow at `.github/workflows/static.yml` installs packages, runs the Vite build and deploys `dist/`.
+Repository Settings → Pages → Build and deployment → Source: **GitHub Actions**.
+The old `static.yml` must be replaced and any old `deploy.yml` removed to avoid duplicate deployments.
+Node 24 actions and the pinned `ubuntu-24.04` image reduce the warning/runner migration messages; upstream Pages actions may still emit their own compatibility notices.
