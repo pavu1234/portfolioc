@@ -1,29 +1,367 @@
-import {lazy,Suspense,useEffect,useState,useRef,Component,type ReactNode} from 'react';
-import {motion,AnimatePresence} from 'framer-motion';
-import {ArrowDownRight,ArrowRight,ArrowUpRight,BookOpen,Check,Command,Copy,Download,ExternalLink,Github,Linkedin,Mail,Menu,Shield,Wifi, X, Activity, Search} from 'lucide-react';
-import {projects,profile,skills,type Project} from './data';
-const TrafficScene=lazy(()=>import('./NetworkScene'));
-const AnalysisScene=lazy(()=>import('./CoreScene'));
-class SceneBoundary extends Component<{children:ReactNode},{failed:boolean}>{state={failed:false};static getDerivedStateFromError(){return{failed:true}}render(){return this.state.failed?<div className="scene-fallback" aria-label="Animated cybersecurity scene">◈</div>:this.props.children}}
-const navigation=['Home','About','Skills','Projects','Experience','Achievements','Contact'];
-const reveals={initial:{opacity:0,y:32},whileInView:{opacity:1,y:0},viewport:{once:true,amount:.12},transition:{duration:.6}};
-function Action({href,children,className='',download=false}:{href:string,children:ReactNode,className?:string,download?:boolean}){return <a href={href} className={className} download={download||undefined} target={href.startsWith('http')?'_blank':undefined} rel={href.startsWith('http')?'noopener noreferrer':undefined}>{children}</a>}
-const resumeUrl=`${import.meta.env.BASE_URL}resume.pdf`;
-function Header({recruiter,setRecruiter}:{recruiter:boolean,setRecruiter:(v:boolean)=>void}){const[open,setOpen]=useState(false);return <header className="header"><a href="#home" className="brand"><span className="brand-icon">◈</span><span>ALUR<span className="brand-accent">.</span>PRAVEEN</span></a><nav className={open?'nav open':'nav'} aria-label="Main navigation">{navigation.map(n=><a key={n} href={'#'+n.toLowerCase()} onClick={()=>setOpen(false)}>{n}</a>)}</nav><div className="header-actions"><button type="button" className="mode-btn" aria-pressed={recruiter} onClick={()=>setRecruiter(!recruiter)}>{recruiter?'3D MODE':'RECRUITER VIEW'}<ArrowUpRight size={14}/></button><button className="mobile-menu" aria-label="Toggle navigation" aria-expanded={open} onClick={()=>setOpen(!open)}>{open?<X/>:<Menu/>}</button></div></header>}
-function Intro({finish}:{finish:()=>void}){useEffect(()=>{const timer=setTimeout(finish,2100);return()=>clearTimeout(timer)},[finish]);return <motion.div className="intro" exit={{opacity:0}} transition={{duration:.4}}><div className="intro-logo">◈</div><div className="intro-kicker">BOOTING NETWORK INVESTIGATION WORKSPACE</div><h2>ALUR PRAVEEN</h2><div className="progress"><span/></div><button onClick={finish}>SKIP INTRO <ArrowRight size={14}/></button></motion.div>}
-function Eyebrow({num,children}:{num:string,children:ReactNode}){return <div className="eyebrow"><span>{num} /</span> {children}</div>}
-function HeroScene(){return <SceneBoundary><Suspense fallback={<div className="scene-fallback">◈</div>}><TrafficScene/></Suspense></SceneBoundary>}
-function AnalysisSceneWrap(){return <SceneBoundary><Suspense fallback={<div className="scene-fallback">INITIALIZING ANALYSIS...</div>}><AnalysisScene/></Suspense></SceneBoundary>}
-function Hero({recruiter}:{recruiter:boolean}){return <section id="home" className="hero section"><div className="hero-grid"><motion.div className="hero-copy" initial={{opacity:0,y:24}} animate={{opacity:1,y:0}} transition={{duration:.8}}><div className="availability"><i/> OPEN TO ENTRY-LEVEL OPPORTUNITIES <span className="indicator-line"/></div><div className="hero-pre">3D CYBERSECURITY PORTFOLIO / NETWORK TRAFFIC INVESTIGATION</div><h1>INVESTIGATE<br/><span className="highlight">THE FLOW.</span></h1><p className="hero-intro">Hi, I'm <strong>Alur Praveen.</strong> I’m an Information Science & Engineering student building cybersecurity projects around network traffic analysis, security operations learning, vulnerability assessment, and practical defensive thinking.</p><p className="role">NETWORK SECURITY <span> / </span> SOC ANALYST ASPIRANT <span> / </span> VAPT <span> / </span> THREAT ANALYSIS</p><div className="hero-ctas"><Action href="#projects" className="btn btn-primary">EXPLORE MY WORK <ArrowUpRight size={17}/></Action><Action href={resumeUrl} className="btn btn-secondary" download>DOWNLOAD RESUME <Download size={16}/></Action></div><div className="hero-mini-panels"><div><span>PROTOCOL MIX</span><strong>TCP · UDP · DNS · HTTP</strong></div><div><span>INVESTIGATION STYLE</span><strong>Triage → Context → Findings</strong></div><div><span>FOCUS</span><strong>Packets, Endpoints & Suspicious Patterns</strong></div></div><div className="hero-bottom"><span><span className="tiny-square"/> SIMULATED FLOW — NOT LIVE NETWORK DATA</span><a href="#about">SCROLL TO EXPLORE <ArrowDownRight size={16}/></a></div></motion.div>{!recruiter&&<div className="hero-art traffic-hero" aria-label="Animated 3D network traffic investigation scene"><div className="hero-art-glow"/><HeroScene/><div className="art-label art-label-a"><span>◉</span> FLOW MAP / ACTIVE</div><div className="art-label art-label-b">PACKET ROUTES <span>TCP · UDP</span></div><div className="traffic-chip chip-one"><Activity size={14}/> ANOMALY CANDIDATES</div><div className="traffic-chip chip-two"><Wifi size={14}/> ENDPOINT RELATIONS</div><div className="traffic-chip chip-three"><Search size={14}/> TRIAGE READY</div><div className="art-corner art-corner-tl"/><div className="art-corner art-corner-br"/></div>}</div><div className="hero-index"><span>PORTFOLIO / 2026</span><span>SIMULATED NETWORK TRAFFIC VISUALIZATION · CYBERSECURITY PROJECTS</span><span>01 — 08</span></div></section>}
-function About(){return <motion.section id="about" className="section inner-section" {...reveals}><Eyebrow num="01">ABOUT / THE ANALYST MINDSET</Eyebrow><div className="split"><div><h2>TRACE IT.<br/>QUESTION IT.<br/><span className="muted">UNDERSTAND</span><br/><em>THE PATTERN.</em></h2></div><div className="about-side"><div className="orbit-card radar-card"><div className="orbit-circle"><Shield size={44} strokeWidth={1.2}/></div><span>ANALYST MODE // NETWORK-FIRST</span></div><p>I'm an Information Science and Engineering student at <strong>Basaveshwar Engineering College, Bagalkot</strong>, with a strong interest in security operations, packet investigation, vulnerability assessment, and defensive security workflows.</p><p>Through internships and self-driven projects, I'm learning how to inspect network behavior, document findings clearly, and build simple security-focused tools for learning and exploration.</p><div className="about-facts"><div><span>EDUCATION</span><strong>B.E. Information Science & Engineering</strong></div><div><span>LOCATION</span><strong>Hosapete, Karnataka</strong></div><div><span>FOCUS</span><strong>SOC Analysis · Traffic Investigation · VAPT</strong></div></div></div></div></motion.section>}
-function Skills(){return <motion.section className="section inner-section" id="skills" {...reveals}><Eyebrow num="02">CAPABILITIES / WHAT I WORK WITH</Eyebrow><div className="section-title-row"><h2>ANALYZE.<br/><em>TRIAGE.</em></h2><p>Built on academic foundations, internship exposure, and curiosity-driven practice. Presented as learning domains rather than inflated percentages.</p></div><div className="skills-grid">{skills.map((s,i)=><div className="skill-panel" key={s.title}><div className="skill-heading"><span>0{i+1}</span><h3>{s.title}</h3><span className="skill-cross">✳</span></div><div className="skill-items">{s.items.map(x=><span key={x}>{x}<i/></span>)}</div></div>)}</div></motion.section>}
-function TriageBoard(){const items=[{icon:<Activity size={18}/>,label:'Protocol Summary',value:'TCP dominant · DNS bursts · HTTP follow-up'},{icon:<Search size={18}/>,label:'Finding Strategy',value:'Filter, correlate, review abnormal patterns'},{icon:<Shield size={18}/>,label:'Defensive Mindset',value:'Analyst verification before any conclusion'}];return <div className="triage-board">{items.map((item,i)=><div className="triage-card" key={i}><div className="triage-icon">{item.icon}</div><span>{item.label}</span><strong>{item.value}</strong></div>)}</div>}
-function NetworkExperience(){return <motion.section className="network-showcase section inner-section" {...reveals}><Eyebrow num="02B">INTERACTIVE / TRAFFIC INVESTIGATION SIMULATION</Eyebrow><div className="section-title-row"><h2>FOLLOW THE<br/><em>PACKETS.</em></h2><p>Drag to orbit around the simulated network. Watch traffic move between endpoints and analyst zones. This is a visual learning experience, not live packet capture.</p></div><div className="network-canvas" aria-label="Interactive animated 3D network traffic investigation"><AnalysisSceneWrap/><div className="network-overlay"><span className="live-dot"/> SIMULATED DATA FLOW <span> / TRIAGE WORKSPACE</span></div></div><TriageBoard/></motion.section>}
-function ProjectVisual({project}:{project:Project}){return <div className={'project-visual visual-'+project.index}><div className="packet-lane lane-one"/><div className="packet-lane lane-two"/><div className="packet-lane lane-three"/><div className="visual-ring ring-one"/><div className="visual-ring ring-two"/><div className="visual-symbol">{project.symbol}</div><div className="visual-caption">MODULE_{project.index} // ACTIVE</div></div>}
-function Projects(){const[filter,setFilter]=useState('All');const[selected,setSelected]=useState<Project|null>(null);const categories=['All','Network Security','SOC / Blue Team','Web Security','Cryptography'];useEffect(()=>{const handler=(e:KeyboardEvent)=>{if(e.key==='Escape')setSelected(null)};window.addEventListener('keydown',handler);return()=>window.removeEventListener('keydown',handler)},[]);return <motion.section id="projects" className="section inner-section project-section" {...reveals}><Eyebrow num="03">SELECTED WORK / HANDS-ON CYBERSECURITY PROJECTS</Eyebrow><div className="section-title-row"><h2>PROJECTS WITH<br/><em>SECURITY CONTEXT.</em></h2><p>Focused projects across digital footprint awareness, traffic triage, SOC learning, and information hiding.</p></div><div className="filters" role="group" aria-label="Filter projects">{categories.map(c=><button key={c} aria-pressed={c===filter} className={c===filter?'active':''} onClick={()=>setFilter(c)}>{c}</button>)}</div><div className="project-grid">{projects.filter(p=>filter==='All'||filter===p.category).map(p=><motion.article layout className="project-card" key={p.id}><ProjectVisual project={p}/><div className="project-content"><div className="project-meta"><span>PROJECT / {p.index}</span><span>{p.category}</span></div><h3>{p.name}</h3><p className="project-subtitle">{p.subtitle}</p><p>{p.description}</p><div className="tag-list">{p.tags.map(t=><span key={t}>{t}</span>)}</div><div className="project-actions"><button onClick={()=>setSelected(p)}>VIEW CASE STUDY <ArrowUpRight size={16}/></button><Action href={p.demo} className="icon-link" ><ExternalLink size={18}/><span className="sr-only">Live demo for {p.name}</span></Action><Action href={p.repo} className="icon-link"><Github size={18}/><span className="sr-only">GitHub for {p.name}</span></Action></div></div></motion.article>)}</div><AnimatePresence>{selected&&<motion.div className="modal-backdrop" initial={{opacity:0}} animate={{opacity:1}} exit={{opacity:0}} onMouseDown={()=>setSelected(null)}><motion.div className="modal" role="dialog" aria-modal="true" aria-label={selected.name+' case study'} tabIndex={-1} initial={{y:40,opacity:0}} animate={{y:0,opacity:1}} exit={{y:40,opacity:0}} onMouseDown={e=>e.stopPropagation()}><div className="modal-top"><span>CASE STUDY / {selected.index}</span><button autoFocus aria-label="Close case study" onClick={()=>setSelected(null)}><X/></button></div><h2>{selected.name}</h2><p className="modal-lead">{selected.description}</p><h3>THE PROBLEM</h3><p>{selected.problem}</p><h3>TECHNICAL APPROACH</h3><p>{selected.approach}</p><h3>CAPABILITIES</h3><ul>{selected.features.map(f=><li key={f}>{f}</li>)}</ul><h3>LIMITATIONS & HONEST SCOPE</h3><p>{selected.limitations}</p><div className="modal-links"><Action href={selected.demo} className="btn btn-primary">LIVE PROJECT <ArrowUpRight size={16}/></Action><Action href={selected.repo} className="btn btn-secondary">SOURCE CODE <Github size={16}/></Action></div></motion.div></motion.div>}</AnimatePresence></motion.section>}
-function Experience(){return <motion.section id="experience" className="section inner-section" {...reveals}><Eyebrow num="04">THE JOURNEY / EXPERIENCE</Eyebrow><div className="section-title-row"><h2>REAL-WORLD<br/><em>EXPOSURE.</em></h2><p>Learning through internships, practical tools, and consistent documentation.</p></div><div className="timeline">{[{date:'JAN — MAY 2026',company:'Movidu Technologies Pvt. Ltd.',role:'Cybersecurity Internship',desc:'Exposure to vulnerability assessment, network security and incident-response concepts. Worked with Kali Linux, Nmap, Burp Suite, and Wireshark to study findings and remediation.'},{date:'APR — MAY 2025',company:'InternPe',role:'Frontend Development Internship',desc:'Strengthened frontend development fundamentals through assignments and practical web projects.'}].map((x,i)=><div className="timeline-item" key={x.company}><div className="timeline-date"><span className="timeline-dot"/>{x.date}</div><div><span className="timeline-n">0{i+1} / EXPERIENCE</span><h3>{x.company}</h3><strong>{x.role}</strong><p>{x.desc}</p></div><ArrowUpRight className="timeline-arrow"/></div>)}</div><div className="education"><div><BookOpen size={21}/><span>EDUCATION</span></div><div><h3>Basaveshwar Engineering College, Bagalkot</h3><p>Bachelor of Engineering — Information Science & Engineering</p><span>Class XII · State Board, 2022 &nbsp; / &nbsp; Class X · CBSE, 2020</span></div></div></motion.section>}
-function Achievements(){return <motion.section id="achievements" className="section inner-section" {...reveals}><Eyebrow num="05">LEADERSHIP / CREDENTIALS / RECOGNITION</Eyebrow><div className="section-title-row"><h2>LEARNING.<br/><em>LEADING.</em></h2></div><div className="achievements-grid"><div className="achievement-feature"><span>RECOGNITION / 2025</span><div className="award-symbol">✳</div><h3>Outstanding Student 2025</h3><p>IEEE AESS Bangalore Chapter</p></div><div className="achievements-list"><div><span>LEADERSHIP / 01</span><h3>Operating Committee Chairperson</h3><p>BEC IEEE Student Branch</p></div><div><span>LEADERSHIP / 02</span><h3>Secretary</h3><p>IEEE AESS Chapter, Basaveshwar Engineering College</p></div><div><span>LEARNING / CERTIFICATIONS</span><div className="certs">{['Java for Artificial Intelligence','Cyber Crimes and Computer Forensics','Mastercard Cybersecurity Job Simulation — Forage','Tata Cybersecurity Job Simulation — Forage','Certified LLM Security Professional (CLLMSP)'].map(x=><span key={x}>{x}</span>)}</div></div></div></div></motion.section>}
-const terminalCommands=['help','about','skills','projects','experience','education','certifications','contact','resume','clear'];
-function TerminalPanel(){const[input,setInput]=useState('');const[lines,setLines]=useState<string[]>(['TRAFFIC_ANALYST_OS v2.0 — Investigation workspace ready.','Type "help" to see available commands.']);const[history,setHistory]=useState<string[]>([]);const[index,setIndex]=useState(-1);const output=useRef<HTMLDivElement>(null);function run(value=input){const cmd=value.trim().toLowerCase();if(!cmd)return;setHistory(h=>[cmd,...h]);setIndex(-1);setInput('');if(cmd==='clear'){setLines([]);return}const replies:Record<string,string>={help:terminalCommands.join('  /  '),about:'Information Science & Engineering student interested in SOC analysis, network security, packet investigation, and VAPT.',skills:skills.flatMap(s=>s.items).join(' · '),projects:projects.map(p=>p.name).join(' / '),experience:'Movidu Technologies — Cybersecurity Internship (2026); InternPe — Frontend Internship (2025).',education:'B.E. Information Science & Engineering — Basaveshwar Engineering College, Bagalkot.',certifications:'Java for AI; Cyber Crimes and Computer Forensics; Mastercard and Tata Forage simulations; CLLMSP.',contact:`Email: ${profile.email} | GitHub: ${profile.github}`,resume:'Opening updated resume PDF...'};setLines(l=>[...l,`analyst@alur:~$ ${cmd}`,replies[cmd]??`Unknown command: ${cmd}. Try "help".`]);if(cmd==='resume')window.open(resumeUrl,'_blank')};useEffect(()=>{output.current?.scrollTo({top:output.current.scrollHeight,behavior:'smooth'})},[lines]);return <div className="terminal-box"><div className="terminal-top"><div><span/><span/><span/></div><span>ANALYST CONSOLE / PORTFOLIO NAVIGATOR</span><Command size={15}/></div><div className="terminal-output" ref={output} aria-live="polite">{lines.map((line,i)=><div key={i} className={line.startsWith('analyst@')?'command':''}>{line}</div>)}</div><form onSubmit={e=>{e.preventDefault();run()}}><label htmlFor="term-input">analyst@alur:~$</label><input id="term-input" value={input} onChange={e=>setInput(e.target.value)} autoComplete="off" spellCheck={false} placeholder="type help" onKeyDown={e=>{if(e.key==='ArrowUp'){e.preventDefault();const next=Math.min(index+1,history.length-1);if(next>=0){setIndex(next);setInput(history[next])}}if(e.key==='ArrowDown'){e.preventDefault();const next=index-1;setIndex(next);setInput(next>=0?history[next]:'')}}}/><button type="submit" aria-label="Run command"><ArrowRight size={18}/></button></form><div className="terminal-hints">{['help','projects','contact'].map(x=><button key={x} onClick={()=>run(x)}>{x}</button>)}</div></div>}
-function Contact(){const[copied,setCopied]=useState(false);async function copy(){try{await navigator.clipboard.writeText(profile.email);setCopied(true);setTimeout(()=>setCopied(false),1800)}catch{window.location.href='mailto:'+profile.email}}return <section id="contact" className="section inner-section contact-section"><Eyebrow num="06">LET'S CONNECT / NEXT MOVE</Eyebrow><h2>LET'S BUILD<br/><em>SOMETHING SECURE.</em></h2><div className="contact-layout"><div><p>Interested in collaborating, hiring for an entry-level security role, or discussing a project? My inbox is open.</p><Action href={'mailto:'+profile.email} className="big-email">{profile.email}<ArrowUpRight size={26}/></Action><button className="copy-email" onClick={copy}>{copied?<Check size={16}/>:<Copy size={16}/>} {copied?'COPIED':'COPY EMAIL ADDRESS'}</button></div><div className="contact-links"><Action href={profile.linkedin}><Linkedin size={20}/> LINKEDIN <ArrowUpRight size={17}/></Action><Action href={profile.github}><Github size={20}/> GITHUB <ArrowUpRight size={17}/></Action><Action href={resumeUrl} download><Download size={20}/> RESUME PDF <ArrowUpRight size={17}/></Action><Action href={'mailto:'+profile.email}><Mail size={20}/> SEND EMAIL <ArrowUpRight size={17}/></Action></div></div><footer><span>© {new Date().getFullYear()} ALUR PRAVEEN</span><span>NETWORK TRAFFIC THEME · CYBERSECURITY PORTFOLIO</span><a href="#home">BACK TO TOP ↑</a></footer></section>}
-export default function App(){const[recruiter,setRecruiter]=useState(false);const[intro,setIntro]=useState(()=>!sessionStorage.getItem('intro-seen')&&!window.matchMedia('(prefers-reduced-motion: reduce)').matches);const finish=()=>{sessionStorage.setItem('intro-seen','true');setIntro(false)};return <div className={recruiter?'app recruiter':'app'}><AnimatePresence>{intro&&<Intro finish={finish}/>}</AnimatePresence><Header recruiter={recruiter} setRecruiter={setRecruiter}/><main><Hero recruiter={recruiter}/><div className="content-area"><About/><Skills/>{!recruiter&&<NetworkExperience/>}<Projects/><Experience/><Achievements/>{!recruiter&&<motion.section className="section inner-section terminal-section" {...reveals}><Eyebrow num="07">INTERACTIVE PORTFOLIO CONSOLE</Eyebrow><div className="section-title-row"><h2>QUERY THE<br/><em>PORTFOLIO.</em></h2><p>A harmless command-based way to explore this portfolio. No real shell commands or scanning actions are executed.</p></div><TerminalPanel/></motion.section>}<Contact/></div></main><div className="fixed-status"><Wifi size={13}/> TRIAGE WORKSPACE ACTIVE <span>●</span></div></div>}
+import { Canvas, useFrame, useThree } from '@react-three/fiber';
+import { Html, Float, Line, Scroll, ScrollControls, Sparkles, Stars, Text } from '@react-three/drei';
+import { useMemo, useRef } from 'react';
+import type { ReactNode } from 'react';
+import * as THREE from 'three';
+import { Activity, ArrowUpRight, Download, Github, Linkedin, Mail, Shield, Wifi } from 'lucide-react';
+import { certifications, profile, projects, skills } from './data';
+
+const resumeUrl = `${import.meta.env.BASE_URL}resume.pdf`;
+
+function App() {
+  return (
+    <div className="full3d-shell">
+      <div className="hud-bar top-bar">
+        <div className="hud-brand"><span>◈</span> ALUR.PRAVEEN</div>
+        <div className="hud-actions">
+          <a href={profile.github} target="_blank" rel="noreferrer">GitHub</a>
+          <a href={profile.linkedin} target="_blank" rel="noreferrer">LinkedIn</a>
+          <a href={resumeUrl} download>Resume</a>
+        </div>
+      </div>
+
+      <Canvas camera={{ position: [0, 0, 8], fov: 48 }} gl={{ antialias: true }} dpr={[1, 1.5]}>
+        <color attach="background" args={['#050816']} />
+        <fog attach="fog" args={['#050816', 10, 34]} />
+        <ambientLight intensity={0.8} />
+        <pointLight position={[4, 3, 4]} intensity={20} color="#00e5ff" />
+        <pointLight position={[-5, -4, 1]} intensity={12} color="#7b8cff" />
+        <ScrollControls pages={5.2} damping={0.16}>
+          <ThreeDPortfolioWorld />
+        </ScrollControls>
+      </Canvas>
+
+      <div className="hud-bar bottom-bar">
+        <div><Activity size={14} /> FULL 3D CYBERSECURITY PORTFOLIO</div>
+        <div><Wifi size={14} /> SCROLL TO MOVE THROUGH THE 3D SOC SPACE</div>
+      </div>
+    </div>
+  );
+}
+
+function ThreeDPortfolioWorld() {
+  const viewport = useThree((state) => state.viewport);
+  const pageGap = viewport.height * 1.06;
+
+  return (
+    <>
+      <GlobalBackground />
+      <Scroll>
+        <group position={[0, 0, 0]}>
+          <HeroSection />
+        </group>
+        <group position={[0, -pageGap, 0]}>
+          <AboutSection />
+        </group>
+        <group position={[0, -pageGap * 2, 0]}>
+          <ProjectsSection />
+        </group>
+        <group position={[0, -pageGap * 3, 0]}>
+          <ExperienceSection />
+        </group>
+        <group position={[0, -pageGap * 4, 0]}>
+          <ContactSection />
+        </group>
+      </Scroll>
+    </>
+  );
+}
+
+function GlobalBackground() {
+  const gridLines = useMemo(() => {
+    const lines: [THREE.Vector3, THREE.Vector3][] = [];
+    for (let i = -14; i <= 14; i += 2) {
+      lines.push([new THREE.Vector3(i, -12, -5), new THREE.Vector3(i, 8, -5)]);
+      lines.push([new THREE.Vector3(-14, i - 2, -5), new THREE.Vector3(14, i - 2, -5)]);
+    }
+    return lines;
+  }, []);
+
+  return (
+    <>
+      <Sparkles count={180} scale={[28, 36, 16]} size={2} speed={0.25} color="#00dfff" />
+      <Stars radius={60} depth={20} count={450} factor={2} fade speed={0.35} />
+      {gridLines.map((line, idx) => (
+        <Line key={idx} points={line} color="#103049" transparent opacity={0.22} lineWidth={1} />
+      ))}
+    </>
+  );
+}
+
+function SectionTitle({ title, subtitle, width = 420 }: { title: string; subtitle: string; width?: number }) {
+  return (
+    <Html transform position={[0, 2.4, 0]} distanceFactor={1.35}>
+      <div className="title-card" style={{ width }}>
+        <span>{subtitle}</span>
+        <h2>{title}</h2>
+      </div>
+    </Html>
+  );
+}
+
+function Screen({ position, children, width = 360 }: { position: [number, number, number]; children: ReactNode; width?: number }) {
+  return (
+    <Float speed={1.1} rotationIntensity={0.06} floatIntensity={0.12}>
+      <group position={position}>
+        <mesh>
+          <boxGeometry args={[3.1, 2, 0.08]} />
+          <meshStandardMaterial color="#09121f" emissive="#0b2032" emissiveIntensity={0.35} metalness={0.3} roughness={0.55} />
+        </mesh>
+        <mesh position={[0, 0, -0.08]}>
+          <boxGeometry args={[3.3, 2.2, 0.04]} />
+          <meshStandardMaterial color="#06101b" metalness={0.3} roughness={0.7} />
+        </mesh>
+        <Html transform position={[0, 0, 0.07]} distanceFactor={1.2}>
+          <div className="screen-ui" style={{ width }}>{children}</div>
+        </Html>
+      </group>
+    </Float>
+  );
+}
+
+function PacketNetwork({ center = [0, 0, 0] as [number, number, number], scale = 1 }: { center?: [number, number, number]; scale?: number }) {
+  const root = useRef<THREE.Group>(null);
+  const movers = useRef<THREE.Mesh[]>([]);
+  const nodes = useMemo<[number, number, number][]>(() => [
+    [0, 0, 0],
+    [-2.2, 1.25, 0],
+    [2.25, 1.35, -0.2],
+    [-2.5, -1.4, 0.25],
+    [2.45, -1.2, 0.15],
+    [0, 2.2, -0.6],
+    [0, -2.35, 0.45]
+  ], []);
+  const edges = useMemo(
+    () => [
+      [0, 1], [0, 2], [0, 3], [0, 4], [0, 5], [0, 6], [1, 3], [2, 4], [5, 1], [5, 2], [6, 3], [6, 4]
+    ].map(([a, b], i) => ({
+      a: new THREE.Vector3(...nodes[a]),
+      b: new THREE.Vector3(...nodes[b]),
+      phase: i * 0.08,
+      alert: i % 5 === 0
+    })),
+    [nodes]
+  );
+
+  useFrame(({ clock }, dt) => {
+    const t = clock.elapsedTime;
+    if (root.current) {
+      root.current.rotation.y += dt * 0.12;
+      root.current.rotation.x = Math.sin(t * 0.25) * 0.06;
+    }
+    movers.current.forEach((mesh, i) => {
+      const edge = edges[i % edges.length];
+      const progress = (t * 0.15 + edge.phase) % 1;
+      mesh.position.copy(edge.a).lerp(edge.b, progress);
+    });
+  });
+
+  return (
+    <group ref={root} position={center} scale={scale}>
+      <mesh>
+        <icosahedronGeometry args={[0.48, 1]} />
+        <meshStandardMaterial color="#00e5ff" emissive="#00bcd4" emissiveIntensity={0.9} wireframe />
+      </mesh>
+      <mesh>
+        <sphereGeometry args={[0.26, 18, 18]} />
+        <meshBasicMaterial color="#ffffff" />
+      </mesh>
+      {[1.45, 2.1, 2.75].map((r, idx) => (
+        <mesh key={r} rotation={[Math.PI / 2, idx * 0.38, idx * 0.4]}>
+          <torusGeometry args={[r, 0.02, 8, 180]} />
+          <meshBasicMaterial color={idx === 1 ? '#7b8cff' : '#00e5ff'} transparent opacity={0.33 - idx * 0.05} />
+        </mesh>
+      ))}
+      {nodes.map((p, idx) => (
+        <group key={idx} position={p}>
+          <mesh>
+            <octahedronGeometry args={[idx === 0 ? 0.34 : 0.16, 0]} />
+            <meshStandardMaterial color={idx % 2 === 0 ? '#00e5ff' : '#63ffc8'} emissive={idx % 2 === 0 ? '#0099aa' : '#20bb8b'} emissiveIntensity={0.75} wireframe />
+          </mesh>
+        </group>
+      ))}
+      {edges.map((edge, idx) => (
+        <Line key={idx} points={[edge.a, edge.b]} color={edge.alert ? '#ff6b86' : '#00dfff'} transparent opacity={0.6} lineWidth={1} />
+      ))}
+      {Array.from({ length: 18 }).map((_, idx) => (
+        <mesh key={idx} ref={(el) => { if (el) movers.current[idx] = el; }}>
+          <sphereGeometry args={[idx % 5 === 0 ? 0.07 : 0.05, 10, 10]} />
+          <meshBasicMaterial color={idx % 5 === 0 ? '#ff8ca2' : idx % 2 === 0 ? '#ffffff' : '#7ef7d4'} />
+        </mesh>
+      ))}
+    </group>
+  );
+}
+
+function ServerStack({ position }: { position: [number, number, number] }) {
+  return (
+    <group position={position}>
+      {[0, 0.66, 1.32].map((y, idx) => (
+        <group key={idx} position={[0, y, 0]}>
+          <mesh>
+            <boxGeometry args={[0.8, 0.48, 0.8]} />
+            <meshStandardMaterial color="#0c1725" emissive="#0a2031" emissiveIntensity={0.25} metalness={0.4} roughness={0.6} />
+          </mesh>
+          <mesh position={[0, 0, 0.41]}>
+            <planeGeometry args={[0.64, 0.18]} />
+            <meshBasicMaterial color={idx % 2 === 0 ? '#00e5ff' : '#7b8cff'} />
+          </mesh>
+        </group>
+      ))}
+    </group>
+  );
+}
+
+function HeroSection() {
+  return (
+    <group>
+      <PacketNetwork center={[0, 0.15, 0]} scale={1.1} />
+      <Text position={[0, 3.4, 0]} fontSize={0.34} color="#7fdfff" anchorX="center">FULL 3D CYBERSECURITY PORTFOLIO</Text>
+      <Screen position={[-3.8, 0.7, 0]} width={300}>
+        <div className="screen-kicker">ALUR PRAVEEN</div>
+        <h3>Investigating networks.<br />Building defensive projects.</h3>
+        <p>Information Science & Engineering student focused on traffic analysis, SOC learning, VAPT, and cybersecurity fundamentals.</p>
+        <div className="chip-row">
+          <span>Network Security</span>
+          <span>SOC</span>
+          <span>VAPT</span>
+        </div>
+      </Screen>
+      <Screen position={[3.9, -0.35, 0]} width={300}>
+        <div className="screen-kicker">LIVE MODULES</div>
+        <ul className="bullet-list">
+          <li>Animated packet-flow environment</li>
+          <li>Floating 3D monitor-style content</li>
+          <li>Project nodes in a cyber scene</li>
+          <li>Updated resume included</li>
+        </ul>
+        <div className="action-row">
+          <a href={resumeUrl} download className="mini-btn"><Download size={14} /> Resume</a>
+          <a href={profile.github} target="_blank" rel="noreferrer" className="mini-btn ghost"><Github size={14} /> GitHub</a>
+        </div>
+      </Screen>
+      <Html transform position={[0, -2.95, 0]} distanceFactor={1.3}>
+        <div className="floating-note">SCROLL DOWN TO TRAVEL THROUGH THE 3D SOC / TRAFFIC INVESTIGATION SPACE</div>
+      </Html>
+    </group>
+  );
+}
+
+function AboutSection() {
+  return (
+    <group>
+      <SectionTitle title="About + Skills" subtitle="01 / ANALYST PROFILE" />
+      <ServerStack position={[-4.3, -1.4, -0.5]} />
+      <ServerStack position={[-3.15, -1.8, 0.2]} />
+      <PacketNetwork center={[2.7, 0.2, -0.7]} scale={0.62} />
+      <Screen position={[0.1, 0, 0]} width={420}>
+        <div className="screen-kicker">PROFILE</div>
+        <h3>Cybersecurity enthusiast with a network-first mindset.</h3>
+        <p>I’m based in {profile.location} and I’m developing practical skills in packet investigation, vulnerability assessment, security tooling, and defensive analysis.</p>
+        <div className="meta-lines">
+          <div><span>Education</span><strong>B.E. Information Science & Engineering</strong></div>
+          <div><span>Focus</span><strong>SOC Analysis · Traffic Triage · VAPT</strong></div>
+        </div>
+      </Screen>
+      <Screen position={[4.4, -0.45, 0.1]} width={300}>
+        <div className="screen-kicker">SKILL MATRIX</div>
+        {skills.map((skill) => (
+          <div key={skill.title} className="skill-block">
+            <strong>{skill.title}</strong>
+            <div className="chip-row compact">
+              {skill.items.slice(0, 5).map((item) => <span key={item}>{item}</span>)}
+            </div>
+          </div>
+        ))}
+      </Screen>
+    </group>
+  );
+}
+
+function ProjectsSection() {
+  const positions: [number, number, number][] = [
+    [-4.2, 0.6, 0],
+    [0, 0.95, 0.2],
+    [4.2, 0.55, 0],
+    [0, -1.4, 0]
+  ];
+
+  return (
+    <group>
+      <SectionTitle title="Projects" subtitle="02 / FLOATING CYBER MODULES" />
+      <PacketNetwork center={[0, -0.1, -1.2]} scale={0.82} />
+      {projects.map((project, idx) => (
+        <Screen key={project.id} position={positions[idx]} width={280}>
+          <div className="screen-kicker">PROJECT / {project.index}</div>
+          <h3>{project.name}</h3>
+          <p>{project.subtitle}</p>
+          <div className="chip-row compact">
+            {project.tags.map((tag) => <span key={tag}>{tag}</span>)}
+          </div>
+          <p className="small-copy">{project.description}</p>
+          <div className="action-row">
+            <a className="mini-btn" href={project.demo} target="_blank" rel="noreferrer">Live <ArrowUpRight size={14} /></a>
+            <a className="mini-btn ghost" href={project.repo} target="_blank" rel="noreferrer">Code <Github size={14} /></a>
+          </div>
+        </Screen>
+      ))}
+    </group>
+  );
+}
+
+function ExperienceSection() {
+  return (
+    <group>
+      <SectionTitle title="Experience + Achievements" subtitle="03 / TIMELINE IN SPACE" width={460} />
+      <Screen position={[-4.25, 0.4, 0]} width={300}>
+        <div className="screen-kicker">INTERNSHIP / 2026</div>
+        <h3>Movidu Technologies Pvt. Ltd.</h3>
+        <p>Exposure to vulnerability assessment, network security, incident-response concepts, and practical tools like Kali Linux, Nmap, Burp Suite, and Wireshark.</p>
+      </Screen>
+      <Screen position={[0, 0.4, 0]} width={300}>
+        <div className="screen-kicker">INTERNSHIP / 2025</div>
+        <h3>InternPe</h3>
+        <p>Strengthened frontend development fundamentals through practical assignments and web projects.</p>
+      </Screen>
+      <Screen position={[4.25, 0.4, 0]} width={300}>
+        <div className="screen-kicker">RECOGNITION</div>
+        <h3>Outstanding Student 2025</h3>
+        <p>IEEE AESS Bangalore Chapter</p>
+        <p className="small-copy">Leadership: Operating Committee Chairperson, BEC IEEE Student Branch · Secretary, IEEE AESS Chapter</p>
+      </Screen>
+      <Screen position={[0, -1.7, 0]} width={430}>
+        <div className="screen-kicker">CERTIFICATIONS</div>
+        <ul className="bullet-list two-col">
+          {certifications.map((item) => <li key={item}>{item}</li>)}
+        </ul>
+      </Screen>
+    </group>
+  );
+}
+
+function ContactSection() {
+  return (
+    <group>
+      <SectionTitle title="Contact" subtitle="04 / OPEN CHANNELS" width={360} />
+      <PacketNetwork center={[0, 0.15, -0.8]} scale={0.72} />
+      <Screen position={[0, 0, 0]} width={420}>
+        <div className="screen-kicker">LET'S CONNECT</div>
+        <h3>Ready for internships and entry-level opportunities.</h3>
+        <p>Email: <a href={`mailto:${profile.email}`}>{profile.email}</a></p>
+        <p>Phone: {profile.phone}</p>
+        <p>Location: {profile.location}</p>
+        <div className="action-grid">
+          <a className="mini-btn" href={`mailto:${profile.email}`}><Mail size={14} /> Email</a>
+          <a className="mini-btn ghost" href={profile.linkedin} target="_blank" rel="noreferrer"><Linkedin size={14} /> LinkedIn</a>
+          <a className="mini-btn ghost" href={profile.github} target="_blank" rel="noreferrer"><Github size={14} /> GitHub</a>
+          <a className="mini-btn" href={resumeUrl} download><Download size={14} /> Resume</a>
+        </div>
+      </Screen>
+      <Html transform position={[0, -2.55, 0]} distanceFactor={1.2}>
+        <div className="footer-note"><Shield size={14} /> Built as a full 3D cybersecurity portfolio experience.</div>
+      </Html>
+    </group>
+  );
+}
+
+export default App;

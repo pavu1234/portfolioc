@@ -1,24 +1,33 @@
-# Alur Praveen — Animated Network Traffic Cybersecurity Portfolio
+# Alur Praveen — Full 3D Cybersecurity Portfolio
 
-This version redesigns the portfolio around a cybersecurity **network traffic investigation** theme.
+This version is a **true full-3D portfolio** built with **React + TypeScript + Vite + React Three Fiber + Drei**.
 
-## Main changes
-- Hero 3D scene now focuses on **endpoints, packet routes, analyst core, and flowing traffic**.
-- Added a dedicated **traffic investigation simulation** section.
-- Project cards now include **animated packet lanes** and stronger cyber visuals.
-- Resume file updated at `public/resume.pdf`.
-- GitHub Pages base path configured for the `portfolioc` repository.
+## What makes this different
+- The portfolio is not a normal webpage with a single 3D hero.
+- The entire experience is a **3D cyber environment**.
+- Content appears as floating 3D screens inside a WebGL scene.
+- Users scroll through a **3D SOC / traffic-investigation world**.
+- Projects, skills, experience, and contact are all presented inside the 3D scene.
 
-## Run locally
+## Included
+- Updated resume at `public/resume.pdf`
+- Four cybersecurity projects:
+  - FootprintCheck
+  - Network Traffic Triage
+  - SOC Homelab Tracker
+  - StegoVault
+- GitHub Pages base path configured for `portfolioc`
+
+## Local run
 ```bash
 npm install
 npm run dev
 ```
 
-## Build
+## Production build
 ```bash
 npm run build
 ```
 
 ## Deploy
-Push the project to the root of the `pavu1234/portfolioc` repository. GitHub Actions should build and deploy automatically.
+Push the files to the root of the `pavu1234/portfolioc` repository.
