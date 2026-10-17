@@ -1,15 +1,3 @@
-export type Project = {
-  id: string;
-  index: string;
-  name: string;
-  subtitle: string;
-  category: string;
-  tags: string[];
-  description: string;
-  repo: string;
-  demo: string;
-};
-
 export const profile = {
   name: 'ALUR PRAVEEN',
   email: 'alurpraveen4217@gmail.com',
@@ -19,60 +7,56 @@ export const profile = {
   linkedin: 'https://www.linkedin.com/in/alur-praveen-607899269'
 };
 
-export const projects: Project[] = [
+export const projects = [
   {
-    id: 'footprintcheck',
-    index: '01',
+    id: '01',
     name: 'FootprintCheck',
-    subtitle: 'Digital footprint awareness',
     category: 'Web Security',
-    tags: ['Footprint', 'Awareness', 'Web'],
-    description: 'A consent-oriented project exploring how public information can contribute to digital exposure awareness.',
+    subtitle: 'Digital footprint awareness',
+    summary: 'A consent-oriented project exploring how public information contributes to digital exposure awareness.',
     repo: 'https://github.com/pavu1234/FootprintCheck',
-    demo: 'https://pavu1234.github.io/FootprintCheck/'
+    demo: 'https://pavu1234.github.io/FootprintCheck/',
+    tags: ['OSINT Awareness', 'Privacy', 'Security']
   },
   {
-    id: 'network-traffic',
-    index: '02',
+    id: '02',
     name: 'Network Traffic Triage',
-    subtitle: 'Observe. Filter. Investigate.',
     category: 'Network Security',
-    tags: ['Traffic', 'CSV', 'SOC'],
-    description: 'A browser-based investigation workspace for exported traffic analysis and rule-based anomaly review.',
+    subtitle: 'Observe. Filter. Investigate.',
+    summary: 'A browser-based workspace for CSV traffic analysis, filtering, endpoint review, and rule-based anomaly investigation.',
     repo: 'https://github.com/pavu1234/Network-traffic',
-    demo: 'https://pavu1234.github.io/Network-traffic/'
+    demo: 'https://pavu1234.github.io/Network-traffic/',
+    tags: ['Wireshark CSV', 'Traffic Analysis', 'SOC']
   },
   {
-    id: 'soc-homelab',
-    index: '03',
+    id: '03',
     name: 'SOC Homelab Tracker',
-    subtitle: 'Document the investigation',
     category: 'SOC / Blue Team',
-    tags: ['SOC', 'Homelab', 'Documentation'],
-    description: 'A structured workspace to record security lab progress, observations, detections, and investigation notes.',
+    subtitle: 'Document the investigation',
+    summary: 'A structured workspace to record security lab phases, observations, detections, and investigation notes.',
     repo: 'https://github.com/pavu1234/SOC-Homelab-Tracker',
-    demo: 'https://pavu1234.github.io/SOC-Homelab-Tracker/'
+    demo: 'https://pavu1234.github.io/SOC-Homelab-Tracker/',
+    tags: ['SOC', 'Blue Team', 'Documentation']
   },
   {
-    id: 'stegovault',
-    index: '04',
+    id: '04',
     name: 'StegoVault',
-    subtitle: 'Information within information',
     category: 'Cryptography',
-    tags: ['Steganography', 'Security', 'Images'],
-    description: 'An educational project exploring hidden-message workflows in images and awareness of information hiding limits.',
+    subtitle: 'Information within information',
+    summary: 'An educational project exploring image-based information hiding and the distinction between hidden data and encrypted data.',
     repo: 'https://github.com/pavu1234/StegoVault',
-    demo: 'https://pavu1234.github.io/StegoVault/'
+    demo: 'https://pavu1234.github.io/StegoVault/',
+    tags: ['Steganography', 'Images', 'Security']
   }
 ];
 
 export const skills = [
   {
     title: 'Security & Analysis',
-    items: ['Network Security', 'Threat Analysis', 'Vulnerability Assessment', 'SOC Fundamentals', 'Incident Response Fundamentals']
+    items: ['Network Security', 'Threat Analysis', 'Vulnerability Assessment', 'Security Monitoring', 'Incident Response Fundamentals']
   },
   {
-    title: 'Tools',
+    title: 'Tools & Platforms',
     items: ['Wireshark', 'Nmap', 'Burp Suite', 'Kali Linux', 'Metasploit']
   },
   {
@@ -81,7 +65,22 @@ export const skills = [
   },
   {
     title: 'Foundations',
-    items: ['Computer Networks', 'Operating Systems', 'Security Basics', 'SIEM Concepts']
+    items: ['Computer Networks', 'Operating Systems', 'SIEM Concepts', 'Security Fundamentals']
+  }
+];
+
+export const experience = [
+  {
+    year: '2026',
+    role: 'Cybersecurity Internship',
+    company: 'Movidu Technologies Pvt. Ltd.',
+    desc: 'Worked with vulnerability assessment, network security, and incident-response concepts using Kali Linux, Nmap, Burp Suite, and Wireshark.'
+  },
+  {
+    year: '2025',
+    role: 'Frontend Development Internship',
+    company: 'InternPe',
+    desc: 'Improved frontend development fundamentals through practical assignments and web projects.'
   }
 ];
 
@@ -91,4 +90,10 @@ export const certifications = [
   'Mastercard Cybersecurity Job Simulation — Forage',
   'Tata Cybersecurity Job Simulation — Forage',
   'Certified LLM Security Professional (CLLMSP)'
+];
+
+export const achievements = [
+  'Outstanding Student 2025 — IEEE AESS Bangalore Chapter',
+  'Operating Committee Chairperson — BEC IEEE Student Branch',
+  'Secretary — IEEE AESS Chapter, Basaveshwar Engineering College'
 ];
