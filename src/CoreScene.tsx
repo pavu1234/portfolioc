@@ -1,6 +1,75 @@
 import {Canvas,useFrame} from '@react-three/fiber';
-import {Float,Line,Stars} from '@react-three/drei';
+import {Line,OrbitControls,Sparkles,Text} from '@react-three/drei';
 import {useMemo,useRef} from 'react';
 import * as THREE from 'three';
-function Core(){const group=useRef<THREE.Group>(null); const points=useMemo(()=>Array.from({length:32},(_,i)=>{const a=i*2.39996;const z=1-2*(i+.5)/32;const r=Math.sqrt(1-z*z);return new THREE.Vector3(Math.cos(a)*r*2.35,Math.sin(a)*r*2.35,z*2.35)}),[]);useFrame(({clock,pointer})=>{if(group.current){group.current.rotation.y=clock.getElapsedTime()*.075+pointer.x*.12;group.current.rotation.x=pointer.y*.09}});return <group ref={group}><Float speed={1.2} rotationIntensity={.1} floatIntensity={.16}><mesh><icosahedronGeometry args={[1.43,2]}/><meshPhysicalMaterial color="#06172a" metalness={.8} roughness={.25} transparent opacity={.85} flatShading wireframe/></mesh><mesh><icosahedronGeometry args={[1.12,1]}/><meshStandardMaterial color="#00dcf8" emissive="#0083bc" emissiveIntensity={.32} wireframe transparent opacity={.55}/></mesh><mesh rotation={[.4,.2,.6]}><torusGeometry args={[1.83,.014,8,130]}/><meshBasicMaterial color="#00e5ff"/></mesh><mesh rotation={[1.25,.5,.2]}><torusGeometry args={[2.02,.012,8,130]}/><meshBasicMaterial color="#3977eb"/></mesh><mesh rotation={[.8,1.2,.2]}><torusGeometry args={[2.22,.006,8,130]}/><meshBasicMaterial color="#485a94"/></mesh>{points.map((p,i)=><mesh key={i} position={p}><sphereGeometry args={[i%5===0?.055:.025,8,8]}/><meshBasicMaterial color={i%4===0?'#b7faff':'#217ae1'}/></mesh>)}{points.filter((_,i)=>i%3===0).map((p,i)=><Line key={i} points={[p,points[(i*3+9)%points.length]]} color="#165d96" transparent opacity={.42} lineWidth={.6}/>)}</Float></group>}
-export default function CoreScene(){return <Canvas camera={{position:[0,0,6.5],fov:42}} dpr={[1,1.55]} gl={{antialias:true,alpha:true,powerPreference:'low-power'}}><ambientLight intensity={.75}/><pointLight position={[4,4,5]} color="#00e5ff" intensity={42}/><pointLight position={[-5,-3,1]} color="#7458ff" intensity={25}/><Core/><Stars radius={70} depth={30} count={200} factor={2} fade speed={.2}/></Canvas>}
+
+const CYAN='#00e5ff';
+const BLUE='#2a8fff';
+const GREEN='#28ffc9';
+const RED='#ff5f7a';
+
+function PacketField(){
+  const group=useRef<THREE.Group>(null);
+  const packets=useRef<THREE.Mesh[]>([]);
+  const orbiters=useRef<THREE.Group[]>([]);
+  const lanes=useMemo(()=>([
+    [new THREE.Vector3(-4,1.8,0),new THREE.Vector3(4,1.8,0)],
+    [new THREE.Vector3(-4,.2,-.4),new THREE.Vector3(4,.2,.4)],
+    [new THREE.Vector3(-4,-1.4,.5),new THREE.Vector3(4,-1.4,-.3)],
+    [new THREE.Vector3(0,-2.3,-1.5),new THREE.Vector3(0,2.3,1.5)]
+  ]),[]);
+
+  useFrame(({clock,pointer},dt)=>{
+    const t=clock.elapsedTime;
+    if(group.current){
+      group.current.rotation.y=THREE.MathUtils.damp(group.current.rotation.y,pointer.x*0.18,2.2,dt);
+      group.current.rotation.x=THREE.MathUtils.damp(group.current.rotation.x,-pointer.y*0.12,2.2,dt);
+    }
+    packets.current.forEach((mesh,i)=>{
+      const [a,b]=lanes[i%lanes.length];
+      const progress=(t*0.18 + (i*0.14))%1;
+      mesh.position.copy(a.clone().lerp(b,progress));
+    });
+    orbiters.current.forEach((orb,i)=>{
+      orb.rotation.z=t*(0.15+i*0.04);
+      orb.rotation.x=t*(0.07+i*0.03);
+    });
+  });
+
+  return <group ref={group}>
+    <mesh>
+      <cylinderGeometry args={[.14,.14,4.8,20,1,true]}/>
+      <meshBasicMaterial color={CYAN} transparent opacity={.2} />
+    </mesh>
+    <mesh rotation={[0,0,Math.PI/2]}>
+      <cylinderGeometry args={[.14,.14,7.8,20,1,true]}/>
+      <meshBasicMaterial color={BLUE} transparent opacity={.18} />
+    </mesh>
+    {[1.45,2.1,2.75].map((r,i)=><group key={r} ref={el=>{if(el)orbiters.current[i]=el}}>
+      <mesh rotation={[Math.PI/2,0,i*.35]}>
+        <torusGeometry args={[r,.026,10,160]}/>
+        <meshBasicMaterial color={i===2?BLUE:CYAN} transparent opacity={.38-(i*.06)} />
+      </mesh>
+    </group>)}
+    {lanes.map((lane,i)=><Line key={i} points={lane} color={i===2?GREEN:i===3?BLUE:CYAN} lineWidth={1.2} transparent opacity={.65} />)}
+    {Array.from({length:16},(_,i)=><mesh key={i} ref={el=>{if(el)packets.current[i]=el}}>
+      <sphereGeometry args={[i%6===0?0.075:0.05,10,10]}/>
+      <meshBasicMaterial color={i%8===0?RED:i%3===0?GREEN:'#ffffff'} />
+    </mesh>)}
+    {[[0,0,0],[3.7,1.8,0],[-3.7,1.8,0],[3.7,.2,.4],[-3.7,.2,-.4],[3.7,-1.4,-.3],[-3.7,-1.4,.5],[0,2.35,1.55],[0,-2.35,-1.55]].map((p,i)=><group key={i} position={p as [number,number,number]}>
+      <mesh><octahedronGeometry args={[i===0?.35:.18,0]}/><meshStandardMaterial color={i===0?CYAN:i%4===0?GREEN:BLUE} emissive={i===0?CYAN:i%4===0?GREEN:BLUE} emissiveIntensity={0.45} wireframe /></mesh>
+      {i===0 && <Text position={[0,-.55,0]} fontSize={.18} color="#d3f6ff" anchorX="center">ANALYST CORE</Text>}
+    </group>)}
+  </group>
+}
+
+export default function CoreScene(){
+  return <Canvas camera={{position:[0,0,8],fov:42}} dpr={[1,1.5]} gl={{antialias:true,alpha:true,powerPreference:'high-performance'}}>
+    <ambientLight intensity={.9}/>
+    <pointLight position={[4,4,4]} color={CYAN} intensity={35}/>
+    <pointLight position={[-4,-2,2]} color={BLUE} intensity={25}/>
+    <PacketField/>
+    <Sparkles count={70} scale={[8,6,4]} size={2} speed={.35} color={CYAN}/>
+    <OrbitControls enablePan={false} enableZoom={false} autoRotate autoRotateSpeed={.35} maxPolarAngle={Math.PI*.68} minPolarAngle={Math.PI*.32}/>
+  </Canvas>
+}
