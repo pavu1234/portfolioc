@@ -1,75 +1,34 @@
-import {Canvas,useFrame} from '@react-three/fiber';
-import {Line,OrbitControls,Sparkles,Text} from '@react-three/drei';
-import {useMemo,useRef} from 'react';
+import { Canvas, useFrame } from '@react-three/fiber';
+import { Line, Text, Sparkles } from '@react-three/drei';
+import { useMemo, useRef } from 'react';
 import * as THREE from 'three';
 
-const CYAN='#00e5ff';
-const BLUE='#2a8fff';
-const GREEN='#28ffc9';
-const RED='#ff5f7a';
-
-function PacketField(){
-  const group=useRef<THREE.Group>(null);
-  const packets=useRef<THREE.Mesh[]>([]);
-  const orbiters=useRef<THREE.Group[]>([]);
-  const lanes=useMemo(()=>([
-    [new THREE.Vector3(-4,1.8,0),new THREE.Vector3(4,1.8,0)],
-    [new THREE.Vector3(-4,.2,-.4),new THREE.Vector3(4,.2,.4)],
-    [new THREE.Vector3(-4,-1.4,.5),new THREE.Vector3(4,-1.4,-.3)],
-    [new THREE.Vector3(0,-2.3,-1.5),new THREE.Vector3(0,2.3,1.5)]
-  ]),[]);
-
+const positions: [number,number,number][] = [[0,0,0],[-2.1,1.55,0],[2.2,1.55,-.4],[-2.45,-1.1,.2],[2.35,-1.2,.3],[-.15,2.55,-1.2],[0,-2.45,.4]];
+const names = ['SOC','IDS','FIREWALL','DNS','WEB','CLOUD','ENDPOINT'];
+const links = [[0,1],[0,2],[0,3],[0,4],[0,5],[0,6],[1,3],[2,4],[5,2],[6,3]];
+function Network() {
+  const root=useRef<THREE.Group>(null);
+  const marker=useRef<THREE.Mesh[]>([]);
+  const edges=useMemo(()=>links.map(([a,b],i)=>({from:new THREE.Vector3(...positions[a]),to:new THREE.Vector3(...positions[b]),alert:i===3||i===8})),[]);
   useFrame(({clock,pointer},dt)=>{
     const t=clock.elapsedTime;
-    if(group.current){
-      group.current.rotation.y=THREE.MathUtils.damp(group.current.rotation.y,pointer.x*0.18,2.2,dt);
-      group.current.rotation.x=THREE.MathUtils.damp(group.current.rotation.x,-pointer.y*0.12,2.2,dt);
-    }
-    packets.current.forEach((mesh,i)=>{
-      const [a,b]=lanes[i%lanes.length];
-      const progress=(t*0.18 + (i*0.14))%1;
-      mesh.position.copy(a.clone().lerp(b,progress));
-    });
-    orbiters.current.forEach((orb,i)=>{
-      orb.rotation.z=t*(0.15+i*0.04);
-      orb.rotation.x=t*(0.07+i*0.03);
+    if(root.current){root.current.rotation.y=THREE.MathUtils.damp(root.current.rotation.y,pointer.x*.28+Math.sin(t*.13)*.1,1.8,dt);root.current.rotation.x=THREE.MathUtils.damp(root.current.rotation.x,-pointer.y*.17,1.8,dt);root.current.position.y=Math.sin(t*.7)*.07;}
+    marker.current.forEach((mesh,i)=>{
+      const e=edges[i%edges.length];if(mesh)mesh.position.copy(e.from).lerp(e.to,(t*(e.alert?.22:.17)+i*.13)%1)
     });
   });
-
-  return <group ref={group}>
-    <mesh>
-      <cylinderGeometry args={[.14,.14,4.8,20,1,true]}/>
-      <meshBasicMaterial color={CYAN} transparent opacity={.2} />
-    </mesh>
-    <mesh rotation={[0,0,Math.PI/2]}>
-      <cylinderGeometry args={[.14,.14,7.8,20,1,true]}/>
-      <meshBasicMaterial color={BLUE} transparent opacity={.18} />
-    </mesh>
-    {[1.45,2.1,2.75].map((r,i)=><group key={r} ref={el=>{if(el)orbiters.current[i]=el}}>
-      <mesh rotation={[Math.PI/2,0,i*.35]}>
-        <torusGeometry args={[r,.026,10,160]}/>
-        <meshBasicMaterial color={i===2?BLUE:CYAN} transparent opacity={.38-(i*.06)} />
-      </mesh>
+  return <group ref={root} scale={.82}>
+    {positions.map((p,i)=><group key={names[i]} position={p}>
+      <mesh><boxGeometry args={i===0?[.84,.64,.58]:[.55,.44,.47]}/><meshStandardMaterial color={i===0?'#00dfff':'#0b2638'} metalness={.72} roughness={.22} emissive={i===0?'#0e8ca6':'#0b4961'} emissiveIntensity={i===0?.85:.36}/></mesh>
+      <mesh position={[0,.02,.247]}><planeGeometry args={[i===0?.55:.34,.1]}/><meshBasicMaterial color={i===3?'#fca76e':'#54eeff'}/></mesh>
+      <Text fontSize={.16} color="#d6f7ff" position={[0,-.47,.05]} anchorX="center">{names[i]}</Text>
+      <mesh rotation={[Math.PI/2,0,0]}><torusGeometry args={[i===0?.82:.53,.008,5,85]}/><meshBasicMaterial color="#21dfff" transparent opacity={.32}/></mesh>
     </group>)}
-    {lanes.map((lane,i)=><Line key={i} points={lane} color={i===2?GREEN:i===3?BLUE:CYAN} lineWidth={1.2} transparent opacity={.65} />)}
-    {Array.from({length:16},(_,i)=><mesh key={i} ref={el=>{if(el)packets.current[i]=el}}>
-      <sphereGeometry args={[i%6===0?0.075:0.05,10,10]}/>
-      <meshBasicMaterial color={i%8===0?RED:i%3===0?GREEN:'#ffffff'} />
-    </mesh>)}
-    {[[0,0,0],[3.7,1.8,0],[-3.7,1.8,0],[3.7,.2,.4],[-3.7,.2,-.4],[3.7,-1.4,-.3],[-3.7,-1.4,.5],[0,2.35,1.55],[0,-2.35,-1.55]].map((p,i)=><group key={i} position={p as [number,number,number]}>
-      <mesh><octahedronGeometry args={[i===0?.35:.18,0]}/><meshStandardMaterial color={i===0?CYAN:i%4===0?GREEN:BLUE} emissive={i===0?CYAN:i%4===0?GREEN:BLUE} emissiveIntensity={0.45} wireframe /></mesh>
-      {i===0 && <Text position={[0,-.55,0]} fontSize={.18} color="#d3f6ff" anchorX="center">ANALYST CORE</Text>}
+    {edges.map((e,i)=><group key={i}>
+      <Line points={[e.from,e.to]} color={e.alert?'#ff7c83':'#00cdf4'} lineWidth={1.3} transparent opacity={.69}/>
+      <mesh ref={el=>{if(el)marker.current[i]=el}}><sphereGeometry args={[e.alert?.10:.065,8,8]}/><meshBasicMaterial color={e.alert?'#ff6c79':'#adfaff'}/></mesh>
     </group>)}
+    <mesh rotation={[Math.PI/2,0,0]}><torusGeometry args={[3.13,.014,8,150]}/><meshBasicMaterial color="#00dfff" transparent opacity={.22}/></mesh>
   </group>
 }
-
-export default function CoreScene(){
-  return <Canvas camera={{position:[0,0,8],fov:42}} dpr={[1,1.5]} gl={{antialias:true,alpha:true,powerPreference:'high-performance'}}>
-    <ambientLight intensity={.9}/>
-    <pointLight position={[4,4,4]} color={CYAN} intensity={35}/>
-    <pointLight position={[-4,-2,2]} color={BLUE} intensity={25}/>
-    <PacketField/>
-    <Sparkles count={70} scale={[8,6,4]} size={2} speed={.35} color={CYAN}/>
-    <OrbitControls enablePan={false} enableZoom={false} autoRotate autoRotateSpeed={.35} maxPolarAngle={Math.PI*.68} minPolarAngle={Math.PI*.32}/>
-  </Canvas>
-}
+export default function CoreScene(){return <Canvas camera={{position:[0,0,7.6],fov:45}} dpr={[1,1.5]} gl={{alpha:true,antialias:true}}><ambientLight intensity={1.1}/><pointLight position={[3,4,4]} color="#00e5ff" intensity={35}/><pointLight position={[-3,-2,1]} color="#4877ff" intensity={18}/><Network/><Sparkles count={48} scale={[8,7,4]} color="#00cdec" size={1.6} speed={.4}/></Canvas>}

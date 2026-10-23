@@ -1,37 +1,22 @@
-# Alur Praveen — V5 Immersive 3D Cybersecurity Portfolio
+# Alur Praveen — Cybersecurity Portfolio (corrected hero)
 
-This version fully redesigns the portfolio into a more **interesting, animated, and immersive 3D experience**.
+This release corrects the screenshot problem in V5: tiny text embedded in 3D screens and very large empty black frames. The new design intentionally renders real 3D animated cybersecurity geometry **behind** readable native HTML content.
 
-## Main idea
-- The entire site is designed as a **3D cyber world**.
-- The hero is more cinematic and more interesting.
-- Sections appear as **floating cyber panels** inside the 3D environment.
-- Animated packet flow, server-rack visuals, orbital rings, and floating UI are used throughout the site.
-- The portfolio is no longer just a normal webpage with one 3D object — it is meant to feel like a complete 3D cybersecurity experience.
+## Changes
+- Rebuilt hero with large readable `DETECT. ANALYZE. DEFEND.` typography.
+- Replaced abstract globe with animated 3D network endpoints (SOC, IDS, firewall, DNS, web, cloud and endpoint).
+- Moving packet markers and highlighted investigation paths.
+- Modern readable UI, project filters, case studies, terminal, contact and recruiter view.
+- Updated 4-project resume in `public/resume.pdf`.
+- GitHub Pages deployment base `/portfolioc/` and workflow included.
 
-## Stack
-- React
-- TypeScript
-- Vite
-- Three.js
-- React Three Fiber
-- Drei
+## Setup
+Run `npm install`, then `npm run dev`. Build using `npm run build`.
 
-## Included
-- Updated resume at `public/resume.pdf`
-- GitHub Pages workflow
-- Base path configured for `pavu1234/portfolioc`
+## GitHub Pages
+Upload the **contents** of this ZIP to the repository root `pavu1234/portfolioc` (do not nest them in another folder). Keep only one deployment workflow under `.github/workflows/`. In Settings > Pages, select GitHub Actions.
 
-## Run locally
-```bash
-npm install
-npm run dev
-```
+## Technical note
+This is a true animated WebGL scene paired with semantic HTML. Placing paragraphs and links as tiny textures on a distant 3D plane caused the unreadable layout in V5; the correction keeps actual 3D geometry without sacrificing essential portfolio content.
 
-## Build
-```bash
-npm run build
-```
-
-## Deploy
-Push the files to the root of the `pavu1234/portfolioc` repository.
+Note: Dependency installation could not complete in this environment; run a build before claiming live deployment success.
