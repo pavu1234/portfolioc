@@ -67,3 +67,22 @@
 @media(max-width:950px){.hero-grid{grid-template-columns:1fr}.hero-art{height:420px}.hero h1{font-size:clamp(58px,10vw,100px)}}
 @media(max-width:650px){.hero-art{height:330px}.hero-stats{gap:16px}.hero-stats strong{font-size:23px}.hero h1{font-size:clamp(50px,12vw,78px)}}
 @media(prefers-reduced-motion:reduce){.project-visual:after{animation:none}}
+
+/* Cinematic, continuously animated real-time WebGL cybersecurity environment */
+.cinematic-global{position:fixed;inset:0;z-index:0;pointer-events:none;opacity:.94}
+.cinematic-global::after{content:"";position:absolute;inset:0;background:linear-gradient(90deg,rgba(2,7,17,.93),rgba(2,7,17,.71) 44%,rgba(2,7,17,.76)),linear-gradient(180deg,rgba(3,8,20,.6),rgba(3,8,20,.35) 45%,rgba(3,8,20,.81));pointer-events:none}
+.cinematic-global canvas{width:100%;height:100%}
+.app{position:relative;background:transparent!important}
+.hero,.content-area,.project-section,.contact-section{background:transparent!important}
+.header,main,.fixed-status{position:relative;z-index:1}
+.header{position:fixed}
+.hero{min-height:790px}
+.hero-grid{position:relative;z-index:2}
+.hero-copy{padding:26px 15px 30px 0}
+.hero-art{filter:drop-shadow(0 0 32px rgba(0,220,255,.3));border:1px solid rgba(79,214,255,.18);background:radial-gradient(circle at center,rgba(5,19,34,.3),rgba(3,8,19,.4) 70%);border-radius:22px}
+.hero-art:before{content:'SECURITY OPERATIONS / 3D LIVE SCENE';position:absolute;top:16px;left:22px;color:#8be7ff;font:700 10px 'JetBrains Mono',monospace;letter-spacing:.08em;z-index:3}
+.inner-section{background:rgba(2,11,24,.35);backdrop-filter:blur(3px)}
+.project-card,.skill-panel,.orbit-card,.terminal-box,.achievement-feature,.achievements-list>div{backdrop-filter:blur(13px);background-color:rgba(6,19,36,.91)!important}
+.section-title-row h2,.inner-section h2{text-shadow:0 8px 25px rgba(0,0,0,.5)}
+@media(max-width:750px){.cinematic-global::after{background:rgba(3,9,20,.83)}.hero{min-height:0}.hero-art{height:330px}}
+@media(prefers-reduced-motion:reduce){.cinematic-global{display:none}.hero,.content-area{background:#07111f!important}}
