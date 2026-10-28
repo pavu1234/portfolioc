@@ -1,28 +1,21 @@
-# Alur Praveen — Cinematic Cybersecurity Portfolio (Chapter Edition)
+# CYBERVERSE — Alur Praveen
 
-This is an original cybersecurity-themed redesign inspired by the user's request for an immersive experience comparable in feel to `28october2026.com`.
+An original hybrid cinematic + interactive 3D cybersecurity portfolio. React, TypeScript, React Three Fiber, Drei, Three.js.
 
-**Reference limitation:** The reference website could not be accessed from this environment. Its exact visuals and interactions were not inspected, so this project is an original interpretation, not a pixel-faithful reproduction.
-
-## What's new
-- Bold editorial hero: “THINK LIKE AN ANALYST.”
-- Animated WebGL cybersecurity server-room background and floating 3D network topology.
-- Immersive chapter-like sections with a signal-green visual identity.
-- More descriptive project introductions and case studies, working external links and filters.
-- Accessible recruiter mode, terminal, responsive navigation.
-- Updated photo-free resume at `public/resume.pdf`.
-- GitHub Pages base path `/portfolioc/` and Actions workflow.
+## Features
+- Automatically transitioning cinematic intro; skip and enter buttons
+- 3D command center with 5 camera destinations, animated infrastructure, drones, stars, network packets
+- Clickable stations via nav, waypoints, and WASD/arrow keys; no external 3D assets required
+- Real project links and honest project descriptions; motion visuals are clearly illustrative
+- Accessible recruiter summary and portfolio/resume without WebGL
+- Photo-free updated resume at `public/resume.pdf`
+- GitHub Pages `/portfolioc/` deployment configured
 
 ## Run
-`npm install && npm run dev`
-
-## Build
-`npm run build`
+`npm install` then `npm run dev`. Production check: `npm run build`.
 
 ## Deploy
-Upload the **contents of this folder** to the root of `pavu1234/portfolioc`, commit to `main`, and ensure Settings → Pages → Build and deployment uses GitHub Actions. The included workflow builds `dist/` and deploys it.
+Upload the **contents** of this folder into the repository root of `pavu1234/portfolioc`, commit to `main`, then check Actions > Build and deploy Cyberverse. In Settings > Pages set source to GitHub Actions. See `https://pavu1234.github.io/portfolioc/`.
 
-## Verification
-Package structure and resume inclusion checked. Production build has **not** been run successfully in this environment, because `npm install` could not resolve registry.npmjs.org. The GitHub Actions workflow should be checked after upload.
-
-All apparent threat traffic is simulated for presentation and does not reflect visitors or real-time incidents.
+## Notes
+This is a stylized real-time 3D WebGL experience, not literal 9D media or an actual SOC monitoring system. No traffic is collected from website visitors. Sound effects are not included. Use Recruiter View for a fast, reduced-motion-friendly presentation. Animations can be expensive on low-end devices.
