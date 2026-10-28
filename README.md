@@ -1,21 +1,36 @@
-# CYBERVERSE — Alur Praveen
+# CYBERVERSE V2 — Hybrid Cinematic 3D Cybersecurity Portfolio
 
-An original hybrid cinematic + interactive 3D cybersecurity portfolio. React, TypeScript, React Three Fiber, Drei, Three.js.
+A six-station, interactive 3D command center featuring a cinematic opening, animated network lab, project vault, career archive, contact uplink, **and a working simulated terminal station**. A lightweight Recruiter View is also included.
 
 ## Features
-- Automatically transitioning cinematic intro; skip and enter buttons
-- 3D command center with 5 camera destinations, animated infrastructure, drones, stars, network packets
-- Clickable stations via nav, waypoints, and WASD/arrow keys; no external 3D assets required
-- Real project links and honest project descriptions; motion visuals are clearly illustrative
-- Accessible recruiter summary and portfolio/resume without WebGL
-- Photo-free updated resume at `public/resume.pdf`
-- GitHub Pages `/portfolioc/` deployment configured
+- Cinematic opening (skip immediately) and 3D station-to-station camera transitions
+- Six clickable stations with top navigation, bottom waypoint buttons, and keyboard shortcuts
+- Functional project demo/source links, contact email, LinkedIn, GitHub and downloadable **photo-free** resume
+- Terminal with `help`, `about`, `skills`, `projects`, `experience`, `education`, `certifications`, `contact`, `github`, `linkedin`, `resume`, `clear`; arrow-key history, Tab autocomplete, buttons and keyboard support
+- Responsive desktop, tablet and mobile navigation and content alignment; reduced-motion CSS
+- Recruiter View with projects, work experience, resume and the terminal
+- Simulation only; no real scanning, exploitation, or device access
 
 ## Run
-`npm install` then `npm run dev`. Production check: `npm run build`.
+```bash
+npm install
+npm run dev
+```
 
-## Deploy
-Upload the **contents** of this folder into the repository root of `pavu1234/portfolioc`, commit to `main`, then check Actions > Build and deploy Cyberverse. In Settings > Pages set source to GitHub Actions. See `https://pavu1234.github.io/portfolioc/`.
+## Build
+```bash
+npm run build
+```
 
-## Notes
-This is a stylized real-time 3D WebGL experience, not literal 9D media or an actual SOC monitoring system. No traffic is collected from website visitors. Sound effects are not included. Use Recruiter View for a fast, reduced-motion-friendly presentation. Animations can be expensive on low-end devices.
+## Deploy to GitHub Pages
+Upload the **contents** of this folder (not its enclosing folder) to `pavu1234/portfolioc` on `main`. GitHub Actions builds the project and deploys `dist/`. Vite is configured with `base: '/portfolioc/'`.
+
+## QA checklist
+- Verify the GitHub Actions build succeeds; check both desktop and mobile views
+- Navigate all six stations and check Previous/Next at both ends
+- Enter `help`, `projects`, `resume`, and `clear` in Terminal
+- Test all four projects' Live Demo and Source links
+- Test the updated resume at `/portfolioc/resume.pdf`
+- Check mobile header, terminal form, recruiter view, and the contact controls
+
+> Local production build was not available in the authoring environment because npm registry DNS returned `EAI_AGAIN`; GitHub Actions is the build verification step. The 3D environment is a 9D-style immersive effect, not literal nine-dimensional technology.
