@@ -44,3 +44,14 @@ Upload the **contents** of this folder (not its enclosing folder) to `pavu1234/p
 - Moving to another room always closes the previous room's information.
 - The terminal opens only after arriving at its room and selecting **View Station**.
 - Recruiter View remains available as a direct-access accessibility alternative.
+
+
+## V4: Verified interaction design
+
+1. Choose any station using header, waypoint, Next/Previous, or keyboard controls.
+2. Camera travels to station. **No content panel opens during movement.**
+3. `VIEW FULL CONTENT` becomes enabled only when the real 3D camera is within 0.38 world-units of the destination. There is no guessed 2.1-second timer.
+4. Click View to open that station's complete details, including the dedicated terminal.
+5. Close, Escape, or click outside the dialog to return to the room; changing destination closes the current panel.
+
+Full content is accessible using Recruiter View even without WebGL. Reduced-motion preferences are respected by CSS.
