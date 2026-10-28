@@ -34,3 +34,13 @@ Upload the **contents** of this folder (not its enclosing folder) to `pavu1234/p
 - Check mobile header, terminal form, recruiter view, and the contact controls
 
 > Local production build was not available in the authoring environment because npm registry DNS returned `EAI_AGAIN`; GitHub Actions is the build verification step. The 3D environment is a 9D-style immersive effect, not literal nine-dimensional technology.
+
+
+## V3 — Destination-first interactions
+
+- Navigating to a room reveals the animated 3D destination before any detailed content.
+- The **View Station** button unlocks after a short camera travel transition.
+- Click **View Station** to open the content for that destination; click **X**, outside the panel, or press **Escape** to close it.
+- Moving to another room always closes the previous room's information.
+- The terminal opens only after arriving at its room and selecting **View Station**.
+- Recruiter View remains available as a direct-access accessibility alternative.
