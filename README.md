@@ -1,32 +1,28 @@
-# Alur Praveen — Cybersecurity Portfolio (corrected hero)
+# Alur Praveen — Cinematic Cybersecurity Portfolio (Chapter Edition)
 
-This release corrects the screenshot problem in V5: tiny text embedded in 3D screens and very large empty black frames. The new design intentionally renders real 3D animated cybersecurity geometry **behind** readable native HTML content.
+This is an original cybersecurity-themed redesign inspired by the user's request for an immersive experience comparable in feel to `28october2026.com`.
 
-## Changes
-- Rebuilt hero with large readable `DETECT. ANALYZE. DEFEND.` typography.
-- Replaced abstract globe with animated 3D network endpoints (SOC, IDS, firewall, DNS, web, cloud and endpoint).
-- Moving packet markers and highlighted investigation paths.
-- Modern readable UI, project filters, case studies, terminal, contact and recruiter view.
-- Updated 4-project resume in `public/resume.pdf`.
-- GitHub Pages deployment base `/portfolioc/` and workflow included.
+**Reference limitation:** The reference website could not be accessed from this environment. Its exact visuals and interactions were not inspected, so this project is an original interpretation, not a pixel-faithful reproduction.
 
-## Setup
-Run `npm install`, then `npm run dev`. Build using `npm run build`.
+## What's new
+- Bold editorial hero: “THINK LIKE AN ANALYST.”
+- Animated WebGL cybersecurity server-room background and floating 3D network topology.
+- Immersive chapter-like sections with a signal-green visual identity.
+- More descriptive project introductions and case studies, working external links and filters.
+- Accessible recruiter mode, terminal, responsive navigation.
+- Updated photo-free resume at `public/resume.pdf`.
+- GitHub Pages base path `/portfolioc/` and Actions workflow.
 
-## GitHub Pages
-Upload the **contents** of this ZIP to the repository root `pavu1234/portfolioc` (do not nest them in another folder). Keep only one deployment workflow under `.github/workflows/`. In Settings > Pages, select GitHub Actions.
+## Run
+`npm install && npm run dev`
 
-## Technical note
-This is a true animated WebGL scene paired with semantic HTML. Placing paragraphs and links as tiny textures on a distant 3D plane caused the unreadable layout in V5; the correction keeps actual 3D geometry without sacrificing essential portfolio content.
+## Build
+`npm run build`
 
-Note: Dependency installation could not complete in this environment; run a build before claiming live deployment success.
+## Deploy
+Upload the **contents of this folder** to the root of `pavu1234/portfolioc`, commit to `main`, and ensure Settings → Pages → Build and deployment uses GitHub Actions. The included workflow builds `dist/` and deploys it.
 
-## V6 cinematic cyber environment
-A real-time WebGL background is mounted behind **all** portfolio sections, with a continuously moving camera, rows of 3D server racks, animated data packets, scanning lights, floor guides, and particle haze. This is a procedural, video-like 3D animation, not an MP4 or a static image.
+## Verification
+Package structure and resume inclusion checked. Production build has **not** been run successfully in this environment, because `npm install` could not resolve registry.npmjs.org. The GitHub Actions workflow should be checked after upload.
 
-All text and buttons remain in the regular document layer for readability and accessibility. The original interactive hero network is preserved. The updated resume is present at `public/resume.pdf`.
-
-Performance: DPR is capped at 1.35 for the background. Users requesting reduced motion receive a static dark fallback. Build with `npm install && npm run build` and deploy using the included GitHub Pages workflow.
-
-## Consolidated release — October 2026
-This archive includes the cinematic 3D background portfolio and the updated one-page cybersecurity resume **without a profile photo** at `public/resume.pdf`. Keep this filename unchanged so every resume link points to the latest PDF. Upload the **contents** of this folder into the root of `pavu1234/portfolioc`, not the outer folder itself.
+All apparent threat traffic is simulated for presentation and does not reflect visitors or real-time incidents.

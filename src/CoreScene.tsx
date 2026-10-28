@@ -19,16 +19,16 @@ function Network() {
   });
   return <group ref={root} scale={.82}>
     {positions.map((p,i)=><group key={names[i]} position={p}>
-      <mesh><boxGeometry args={i===0?[.84,.64,.58]:[.55,.44,.47]}/><meshStandardMaterial color={i===0?'#00dfff':'#0b2638'} metalness={.72} roughness={.22} emissive={i===0?'#0e8ca6':'#0b4961'} emissiveIntensity={i===0?.85:.36}/></mesh>
-      <mesh position={[0,.02,.247]}><planeGeometry args={[i===0?.55:.34,.1]}/><meshBasicMaterial color={i===3?'#fca76e':'#54eeff'}/></mesh>
+      <mesh><boxGeometry args={i===0?[.84,.64,.58]:[.55,.44,.47]}/><meshStandardMaterial color={i===0?'#c7ff79':'#102a1a'} metalness={.72} roughness={.22} emissive={i===0?'#337e3f':'#224f36'} emissiveIntensity={i===0?.85:.36}/></mesh>
+      <mesh position={[0,.02,.247]}><planeGeometry args={[i===0?.55:.34,.1]}/><meshBasicMaterial color={i===3?'#fca76e':'#bafc85'}/></mesh>
       <Text fontSize={.16} color="#d6f7ff" position={[0,-.47,.05]} anchorX="center">{names[i]}</Text>
-      <mesh rotation={[Math.PI/2,0,0]}><torusGeometry args={[i===0?.82:.53,.008,5,85]}/><meshBasicMaterial color="#21dfff" transparent opacity={.32}/></mesh>
+      <mesh rotation={[Math.PI/2,0,0]}><torusGeometry args={[i===0?.82:.53,.008,5,85]}/><meshBasicMaterial color="#b9fa85" transparent opacity={.32}/></mesh>
     </group>)}
     {edges.map((e,i)=><group key={i}>
-      <Line points={[e.from,e.to]} color={e.alert?'#ff7c83':'#00cdf4'} lineWidth={1.3} transparent opacity={.69}/>
-      <mesh ref={el=>{if(el)marker.current[i]=el}}><sphereGeometry args={[e.alert?.10:.065,8,8]}/><meshBasicMaterial color={e.alert?'#ff6c79':'#adfaff'}/></mesh>
+      <Line points={[e.from,e.to]} color={e.alert?'#ff7c83':'#96e6b3'} lineWidth={1.3} transparent opacity={.69}/>
+      <mesh ref={el=>{if(el)marker.current[i]=el}}><sphereGeometry args={[e.alert?.10:.065,8,8]}/><meshBasicMaterial color={e.alert?'#ff6c79':'#dbffbd'}/></mesh>
     </group>)}
-    <mesh rotation={[Math.PI/2,0,0]}><torusGeometry args={[3.13,.014,8,150]}/><meshBasicMaterial color="#00dfff" transparent opacity={.22}/></mesh>
+    <mesh rotation={[Math.PI/2,0,0]}><torusGeometry args={[3.13,.014,8,150]}/><meshBasicMaterial color="#c7ff79" transparent opacity={.22}/></mesh>
   </group>
 }
-export default function CoreScene(){return <Canvas camera={{position:[0,0,7.6],fov:45}} dpr={[1,1.5]} gl={{alpha:true,antialias:true}}><ambientLight intensity={1.1}/><pointLight position={[3,4,4]} color="#00e5ff" intensity={35}/><pointLight position={[-3,-2,1]} color="#4877ff" intensity={18}/><Network/><Sparkles count={48} scale={[8,7,4]} color="#00cdec" size={1.6} speed={.4}/></Canvas>}
+export default function CoreScene(){return <Canvas camera={{position:[0,0,7.6],fov:45}} dpr={[1,1.5]} gl={{alpha:true,antialias:true}}><ambientLight intensity={1.1}/><pointLight position={[3,4,4]} color="#c7ff79" intensity={35}/><pointLight position={[-3,-2,1]} color="#7db64e" intensity={18}/><Network/><Sparkles count={48} scale={[8,7,4]} color="#8fce76" size={1.6} speed={.4}/></Canvas>}
