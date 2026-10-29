@@ -55,3 +55,6 @@ Upload the **contents** of this folder (not its enclosing folder) to `pavu1234/p
 5. Close, Escape, or click outside the dialog to return to the room; changing destination closes the current panel.
 
 Full content is accessible using Recruiter View even without WebGL. Reduced-motion preferences are respected by CSS.
+
+## V5: One-way forward-only route
+All six stations now align on one corridor axis (X=0), spaced 14 world-units apart in decreasing Z order: Command Deck → Network Lab → Project Vault → Career Archive → Uplink → Terminal. The camera travels forward only, not sideways between rooms; previously visited destinations are disabled in navigation. Forward arrows/keyboard advance, and arrival is detected from the camera location before View Full Content is unlocked. A station’s information is not displayed automatically. Reload the page to restart from the beginning. Recruiter View provides a separate flat summary.
