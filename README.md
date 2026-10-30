@@ -1,35 +1,20 @@
-# CYBERVERSE X9 — Complete Cybersecurity Portfolio
+# ALUR PRAVEEN — Portfolio Atelier
 
-This is a full redesign of the portfolio into a more interactive, sequence-driven 9D-style experience.
+Fresh, content-first cybersecurity portfolio. No fake security dashboards, network imagery, forced 3D, or game-like navigation.
 
-## Main improvements
-- Completely new frontend design
-- Single forward route through a straight cyber corridor
-- Clear sequence of destinations
-- Visitors travel first, arrive, then click **View Full Content**
-- Fully responsive interface for desktop, laptop, tablet, and mobile
-- Interactive terminal station included
-- Updated resume without photo in `public/resume.pdf`
-
-## Destinations
-1. Boot Gateway
-2. Threat Intelligence Hub
-3. SOC Command Center
-4. Project Vault
-5. Forensics Archive
-6. Terminal Nexus
-7. Uplink Station
-
-## Run locally
-```bash
-npm install
-npm run dev
-```
+## Quick start
+`npm install` then `npm run dev`.
 
 ## Build
-```bash
-npm run build
-```
+`npm run build`.
 
-## Deploy
-Push to the `pavu1234/portfolioc` repository root.
+## Deploy to pavu1234/portfolioc
+**Replace the previous repository contents, don't layer this project over old files.** Delete old `src`, `index.html`, obsolete workflows (`.github/workflows/static.yml`, etc.) and other old frontend files before placing these files in the repository root. Preserve only any separate files that are intentionally needed. Commit the new `package.json`, `package-lock.json`, `vite.config.js`, `index.html`, `src/`, `public/resume.pdf`, and `.github/workflows/deploy.yml`.
+
+In GitHub Settings → Pages, set Source to GitHub Actions. Your public URL remains `https://pavu1234.github.io/portfolioc/`.
+
+## Interactions
+Mobile menu, case-study dialogs, email-copy button, anchored navigation, email links, source/demo links, and photo-free resume. All are implemented with semantic HTML and vanilla JavaScript.
+
+## Important
+Project descriptions describe learning projects, not independently verified deployed-security products. Please review experience and education details before publishing.
