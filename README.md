@@ -1,20 +1,20 @@
-# ALUR PRAVEEN — Portfolio Atelier
+# Praveen's Hacker Room
 
-Fresh, content-first cybersecurity portfolio. No fake security dashboards, network imagery, forced 3D, or game-like navigation.
+Original interactive 3D hacker-room portfolio, inspired by the exploratory 3D-room concept of mbilalkhan.com. All room geometry is generated at runtime with Three.js (no copied proprietary room models or source).
 
-## Quick start
-`npm install` then `npm run dev`.
+## Features
+- One explorable 3D room with animated RGB lighting, three working monitors, desk, laptop, workstation, shelves, books, plants, chair, PC tower, wall board, and decorative equipment.
+- Click **monitors** for Projects, **laptop** for Terminal, **wall board** for About, **cabinet** for Experience, **file drawer** for Resume, **door** for Contact.
+- Hover outlines and object tooltips. Camera orbit via drag; zoom with wheel; camera guided focus via object clicks; reset view button.
+- Working terminal commands; mobile-friendly panels; performance settings and reduced motion support.
+- Includes photo-free `public/resume.pdf` and GitHub Pages workflow for `/portfolioc/`.
 
-## Build
-`npm run build`.
+## Run
+```bash
+npm install
+npm run dev
+npm run build
+```
 
-## Deploy to pavu1234/portfolioc
-**Replace the previous repository contents, don't layer this project over old files.** Delete old `src`, `index.html`, obsolete workflows (`.github/workflows/static.yml`, etc.) and other old frontend files before placing these files in the repository root. Preserve only any separate files that are intentionally needed. Commit the new `package.json`, `package-lock.json`, `vite.config.js`, `index.html`, `src/`, `public/resume.pdf`, and `.github/workflows/deploy.yml`.
-
-In GitHub Settings → Pages, set Source to GitHub Actions. Your public URL remains `https://pavu1234.github.io/portfolioc/`.
-
-## Interactions
-Mobile menu, case-study dialogs, email-copy button, anchored navigation, email links, source/demo links, and photo-free resume. All are implemented with semantic HTML and vanilla JavaScript.
-
-## Important
-Project descriptions describe learning projects, not independently verified deployed-security products. Please review experience and education details before publishing.
+## Important deployment step
+Replace all files in `pavu1234/portfolioc`, removing old `src/World.tsx`, TypeScript files, and previous workflows. Set GitHub Pages Source to **GitHub Actions**. Upload files from this folder's root, not the enclosing folder.

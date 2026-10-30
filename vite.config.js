@@ -1,1 +1,2 @@
-export default { base: '/portfolioc/' };
+import { defineConfig } from 'vite';
+export default defineConfig({base:'/portfolioc/'});
